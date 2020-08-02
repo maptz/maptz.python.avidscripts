@@ -13,6 +13,7 @@ def dumpAvb(binPath):
     items = []
     distinctKeys = {}
     distinctKeys['name'] = 1
+    distinctKeys['type'] = 1
     print("Opening .avb file: " + binPath)
     with avb.open(binPath) as f:
       print("Opened .avb file. Extracting sequences.")
@@ -21,12 +22,23 @@ def dumpAvb(binPath):
         if (mob.mob_type == 'SourceMob'):
             pass
         elif (mob.mob_type == 'MasterMob'):
+            attr1 = mob.property_data['attributes']
+            attr2 = mob.property_data['attributes']['_USER']
+            ndict = {}
+            ndict['name'] = mob.property_data['name']
+            ndict['type'] = "MASTER"
+            for key in attr2:
+                ndict[key] = attr2[key]
+                if key not in distinctKeys:
+                    distinctKeys[key] = 1
+            items.append(ndict)
             pass
         elif (mob.mob_type == 'CompositionMob'):
             attr1 = mob.property_data['attributes']
             attr2 = mob.property_data['attributes']['_USER']
             ndict = {}
             ndict['name'] = mob.property_data['name']
+            ndict['type'] = "SEQUENCE"
             for key in attr2:
                 ndict[key] = attr2[key]
                 if key not in distinctKeys:
@@ -59,20 +71,26 @@ def dumpAvb(binPath):
         csv = csv + line + '\n'
 
     csvPath=os.path.join(outputDirPath, fileNameWOExt + ".txt")
-    with open(csvPath, "w") as text_file:
+    with open(csvPath, "w", encoding='utf-8') as text_file:
         text_file.write(csv)
 
 #print('Number of arguments:', len(sys.argv), 'arguments.')
 #print('Argument List:', str(sys.argv))
-if (len(sys.argv) < 2):
-    print("Not enough arguments. Exiting.")
-    exit()
 
 print("************************************")
 print("***     Dumping Avid AVB file    ***")
 print("***    to .txt and .json files   ***")
 print("************************************")
-binPath = sys.argv[1]
+
+binPath=""
+if (len(sys.argv) < 2):
+    # print("Not enough arguments. Exiting.")
+    # exit()
+    binPath="X:\\RUSHES CLIPS.ARCHiVE 2017 - GATHER ALL.avb"
+else:
+    binPath = sys.argv[1]
+
+
 dumpAvb(binPath)
 
 # with avb.open("C:/Users/steph/OneDrive/Desktop/TANJA TODO/RUSHES.ARCHIVE - 2017 - VIDEO - ALL.avb") as f:
