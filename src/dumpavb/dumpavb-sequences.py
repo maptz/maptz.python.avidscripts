@@ -22,16 +22,16 @@ def dumpAvb(binPath):
         if (mob.mob_type == 'SourceMob'):
             pass
         elif (mob.mob_type == 'MasterMob'):
-            attr1 = mob.property_data['attributes']
-            attr2 = mob.property_data['attributes']['_USER']
-            ndict = {}
-            ndict['name'] = mob.property_data['name']
-            ndict['type'] = "MASTER"
-            for key in attr2:
-                ndict[key] = attr2[key]
-                if key not in distinctKeys:
-                    distinctKeys[key] = 1
-            items.append(ndict)
+            # attr1 = mob.property_data['attributes']
+            # attr2 = mob.property_data['attributes']['_USER']
+            # ndict = {}
+            # ndict['name'] = mob.property_data['name']
+            # ndict['type'] = "MASTER"
+            # for key in attr2:
+            #     ndict[key] = attr2[key]
+            #     if key not in distinctKeys:
+            #         distinctKeys[key] = 1
+            # items.append(ndict)
             pass
         elif (mob.mob_type == 'CompositionMob'):
             attr1 = mob.property_data['attributes']
@@ -86,7 +86,7 @@ binPath=""
 if (len(sys.argv) < 2):
     # print("Not enough arguments. Exiting.")
     # exit()
-    binPath="X:\\RUSHES CLIPS.ARCHiVE 2017 - GATHER ALL.avb"
+    binPath="X:\\RUSHES.ARCHIVE - 2018 - ALL - SEQUENCES.avb"
 else:
     binPath = sys.argv[1]
 
